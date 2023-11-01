@@ -1,0 +1,46 @@
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../store'
+import { signInWithEmailAndPassword } from '../store/auth/thunks'
+
+type Inputs = {
+  email: string
+  password: string
+}
+
+export default function SignUp() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>()
+  const dispatch = useDispatch<AppDispatch>()
+  const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
+    dispatch(signInWithEmailAndPassword(data))
+  }
+  // watch input value by passing the name of it
+  const isAuth = useSelector((state: RootState) => state.auth.token)
+  if (isAuth) {
+  }
+  return (
+    <>
+      <Head>
+        <title>Sign in</title>
+      </Head>
+      <div className='flex min-h-screen flex-col justify-center md:px-24 md:py-10 items-center'>
+        <form className='flex flex-col' onSubmit={handleSubmit(onSubmit)}>
+          {/* register your input into the hook by invoking the "register" function */}
+          <span>Email</span>
+          <input className='bg-lightGrey border border-gray-900 p-2 rounded-md' {...register('email', { required: true })} />
+          {/* include validation with required or other standard HTML validation rules */}
+          <span>Password</span>
+          <input type='password' className='bg-lightGrey border border-gray-900 p-2 rounded-md' {...register('password', { required: true })} />
+          {/* errors will return when field validation fails  */}
+          {errors.password && <span className='text-red'>This field is required</span>}
+
+          <input className='cursor-pointer bg-richBlack text-white mt-4 rounded-md h-10 ' type='submit' value='Send' />
+        </form>
+      </div>
+    </>
+  )
+}

@@ -1,0 +1,27 @@
+{
+  "name": "webchat",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "dependencies": {
+    "@webchat/eslint-config": "*",
+    "yarn": "^1.22.19"
+  },
+  "scripts": {
+    "postinstall": "husky install",
+    "test": "jest  --forceExit && yarn test:e2e",
+    "test:e2e": "cd packages/saturn && npx jest --config jest-e2e.config.ts --detectOpenHandles --forceExit",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx}": [
+      "eslint . --fix --ext .tsx,.ts"
+    ]
+  }
+}
