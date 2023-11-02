@@ -7,7 +7,7 @@ const persist = JSON.parse(localStorage.getItem('persist:root')!)
 if (persist) {
   const token = JSON.parse(persist.auth).token
 
-  socket = io('http://localhost:3001', {
+  socket = io('https://webchat-2mad.onrender.com', {
     query: { token },
     autoConnect: false,
   })
