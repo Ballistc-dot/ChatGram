@@ -14,10 +14,8 @@
     "yarn": "^1.22.19"
   },
   "scripts": {
-    "postinstall": "husky install",
     "test": "jest  --forceExit && yarn test:e2e",
     "test:e2e": "cd packages/saturn && npx jest --config jest-e2e.config.ts --detectOpenHandles --forceExit",
-    "prepare": "husky install"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
