@@ -10,13 +10,7 @@ interface ISearch {
 }
 
 export function Search({ onSearch, clear }: ISearch) {
-  const {
-    register,
-    watch,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<Inputs>()
+  const { register, handleSubmit, reset } = useForm<Inputs>()
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     onSearch(data.search)
     reset()

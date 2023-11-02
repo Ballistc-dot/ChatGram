@@ -46,12 +46,7 @@ interface ISocketMessageResponse {
   message: string
 }
 export default function Chat() {
-  const {
-    register,
-
-    handleSubmit,
-    reset,
-  } = useForm<Test>()
+  const { register, handleSubmit, reset } = useForm<Test>()
   const [chatMessages, setChatMessages] = useState<IMessage[]>([])
   const [chats, setChats] = useState<Chat[]>([])
   const [searchedContacts, setSearchedContacts] = useState<Contact[]>([])
