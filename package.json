@@ -15,7 +15,7 @@
   },
   "scripts": {
     "test": "jest  --forceExit && yarn test:e2e",
-    "test:e2e": "cd packages/saturn && npx jest --config jest-e2e.config.ts --detectOpenHandles --forceExit",
+    "test:e2e": "cd packages/saturn && npx jest --config jest-e2e.config.ts --detectOpenHandles --forceExit"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
