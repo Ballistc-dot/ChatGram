@@ -17,7 +17,7 @@ export const chatSlice = createSlice({
       state.activeChat = action.payload.activeChat
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: () => {
     //builder.addCase(signInWithGoogle.pending, (state) => {}),
   },
 })

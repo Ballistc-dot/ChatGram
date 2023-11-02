@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux'
 import { Search } from '../components/Search'
 import { api } from '../services/axios'
 import { SearchedContacts } from '../components/SearchedContacts'
-import { useNavigate } from 'react-router-dom'
 type Test = {
   message: string
 }
@@ -49,15 +48,14 @@ interface ISocketMessageResponse {
 export default function Chat() {
   const {
     register,
-    watch,
+
     handleSubmit,
     reset,
-    formState: { errors },
   } = useForm<Test>()
   const [chatMessages, setChatMessages] = useState<IMessage[]>([])
   const [chats, setChats] = useState<Chat[]>([])
   const [searchedContacts, setSearchedContacts] = useState<Contact[]>([])
-  const navigation = useNavigate()
+
   useEffect(() => {
     async function connectSocket() {
       await socket.connect()
