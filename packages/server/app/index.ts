@@ -26,6 +26,7 @@ app.use(cors())
 const sendMessageController = new SendMessageController()
 
 io.on('connection', (socket: Socket) => {
+  console.log('connected')
   try {
     const user = jwt.verify(socket.handshake.query.token as string, jwtConfig.jwt.secret)
 

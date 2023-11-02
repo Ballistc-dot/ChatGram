@@ -1,14 +1,14 @@
-import { SendIcon } from './components/SendIcon'
-import socket from './services/socket'
-import { RootState } from './store'
+import { SendIcon } from '../components/SendIcon'
+import socket from '../services/socket'
+import { RootState } from '../store'
 import { List, Smiley } from '@phosphor-icons/react'
 import { useEffect, useRef, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useDispatch, useSelector } from 'react-redux'
-import { Search } from './components/Search'
-import { api } from './services/axios'
-import { SearchedContacts } from './components/SearchedContacts'
-
+import { useSelector } from 'react-redux'
+import { Search } from '../components/Search'
+import { api } from '../services/axios'
+import { SearchedContacts } from '../components/SearchedContacts'
+import { useNavigate } from 'react-router-dom'
 type Test = {
   message: string
 }
@@ -46,7 +46,7 @@ interface ISocketMessageResponse {
   }
   message: string
 }
-export default function Home() {
+export default function Chat() {
   const {
     register,
     watch,
@@ -57,14 +57,14 @@ export default function Home() {
   const [chatMessages, setChatMessages] = useState<IMessage[]>([])
   const [chats, setChats] = useState<Chat[]>([])
   const [searchedContacts, setSearchedContacts] = useState<Contact[]>([])
-
-  console.log(chats, 'oioioi')
+  const navigation = useNavigate()
   useEffect(() => {
-    socket?.connect()
+    async function connectSocket() {
+      await socket.connect()
+    }
+    connectSocket()
   }, [])
-  //const chats = useSelector((state: RootState) => state.chat.chats)
-  socket?.on('message', (content: ISocketMessageResponse) => {
-    console.log(activeChat.id, content.user.id)
+  socket.on('message', (content: ISocketMessageResponse) => {
     if (activeChat.id !== content.user.id) {
       const newChat = chats.filter((chat) => {
         if (chat.user.id !== content.user.id) {
@@ -81,7 +81,6 @@ export default function Home() {
     }
 
     if (activeChat.id === content.user.id) {
-      console.log('hahahaha q legal')
       setChatMessages([
         ...chatMessages,
         {
@@ -93,17 +92,14 @@ export default function Home() {
     }
   })
 
-  const dispatch = useDispatch()
   const activeChat = useSelector((state: RootState) => state.chat.activeChat)
-  console.log('active', activeChat)
-  const onSubmit: SubmitHandler<Test> = (data) => {
-    console.log('alllllllllllllouuu', activeChat)
+
+  const onSubmit: SubmitHandler<Test> = async (data) => {
     if (data.message.length > 0) {
-      socket?.emit('message', {
+      await socket.emit('message', {
         message: data.message,
         userId: activeChat.id,
       })
-
       setChatMessages([
         ...chatMessages,
         {
@@ -128,9 +124,7 @@ export default function Home() {
 
   //function handleOnPress() {}
   async function handleSearch(search: string) {
-    console.log(search)
     const response = await api.get(`/people?username=${search}`)
-    console.log(response)
 
     setSearchedContacts([
       {
@@ -144,12 +138,7 @@ export default function Home() {
     setSearchedContacts([])
     setChatMessages([])
   }
-  const isAuth = useSelector((state: RootState) => state.auth.token)
-  console.log(isAuth)
 
-  if (!isAuth) {
-    console.log('unlog')
-  }
   return (
     <main className='flex min-h-screen flex-col justify-between md:px-24 md:py-10'>
       <div className=' p-4 flex min-h-[500px] flex-col md:flex-row'>
@@ -163,7 +152,6 @@ export default function Home() {
             <div className='mt-4'>
               {searchedContacts.length > 0
                 ? searchedContacts.map((chat) => {
-                    console.log(chat.user)
                     return chat.user.map((user) => (
                       <SearchedContacts
                         onPress={clearChats}

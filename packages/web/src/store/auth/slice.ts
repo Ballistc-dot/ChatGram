@@ -16,7 +16,6 @@ export const authSlice = createSlice({
     //builder.addCase(signInWithGoogle.pending, (state) => {}),
     builder.addCase(signInWithEmailAndPassword.fulfilled, (state, action) => {
       // const teste = action.meta.arg.idToken
-      console.log('here', action.payload.access_token)
       state.isAuth = true
       state.token = action.payload.access_token
     })

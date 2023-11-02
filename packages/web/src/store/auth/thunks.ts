@@ -1,4 +1,3 @@
-'use client'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { ISignInWithEmailAndPasswordPayload } from './interfaces/ISignInPayload'
 import { api } from '../../services/axios'
@@ -12,7 +11,7 @@ export const signInWithEmailAndPassword = createAsyncThunk(
         password,
       })
       const { access_token } = response.data
-      console.log(' aqqq', access_token)
+
       api.defaults.headers.common['Authorization'] = `Bearer ${access_token}`
 
       return {
@@ -20,6 +19,7 @@ export const signInWithEmailAndPassword = createAsyncThunk(
       }
     } catch (error: any) {
       if (error.response && error.response.data.message) {
+        alert(error.response.data.message)
         return rejectWithValue(error.response.data.message)
       } else {
         return rejectWithValue(error.message)

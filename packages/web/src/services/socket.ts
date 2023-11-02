@@ -1,10 +1,11 @@
 import { Socket, io } from 'socket.io-client'
 
-let socket: Socket | undefined = undefined
-// "undefined" means the URL will be computed from the `window.location` object
-if (typeof window !== 'undefined') {
-  // Perform localStorage action
-  const token = localStorage.getItem('access_token')
+let socket: Socket = {} as Socket
+
+const persist = JSON.parse(localStorage.getItem('persist:root')!)
+
+if (persist) {
+  const token = JSON.parse(persist.auth).token
 
   socket = io('http://localhost:3001', {
     query: { token },

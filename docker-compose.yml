@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: 'library'
+      POSTGRES_PASSWORD: 'library'
+    ports:
+      - '5432:5432'
+  redis:
+    image: 'bitnami/redis:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    restart: always
+    ports:
+      - '6379:6379'

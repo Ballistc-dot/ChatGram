@@ -14,7 +14,6 @@ export const chatSlice = createSlice({
         }
       }>
     ) => {
-      console.log('here', action)
       state.activeChat = action.payload.activeChat
     },
   },

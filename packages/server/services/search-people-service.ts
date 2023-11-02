@@ -14,7 +14,6 @@ export class SearchPeopleService {
     private jwtProvider: JWTProvider
   ) {}
   async execute(username: string) {
-    console.log('here', username)
     const users = await this.usersRepository.findManyByUsername(username)
 
     return { users }
