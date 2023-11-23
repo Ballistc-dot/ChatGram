@@ -51,7 +51,7 @@ export default function Chat() {
   const [chatMessages, setChatMessages] = useState<IMessage[]>([])
   const [chats, setChats] = useState<Chat[]>([])
   const [searchedContacts, setSearchedContacts] = useState<Contact[]>([])
-  const token = useSelector((state: RootState) => state.auth.token)
+
   const navigate = useNavigate()
 
   if (!socket) {

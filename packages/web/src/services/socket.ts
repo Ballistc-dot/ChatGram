@@ -6,10 +6,13 @@ let socket: any
 if (persist) {
   token = JSON.parse(persist?.auth)?.token
   if (token) {
-    socket = io('http://localhost:3001', {
-      query: { token: token! },
-      autoConnect: false,
-    })
+    socket = io(
+      'https://webchat-2mad.onrender.com',
+      /*'http://localhost:3001'*/ {
+        query: { token: token! },
+        autoConnect: false,
+      }
+    )
   }
 }
 export default socket

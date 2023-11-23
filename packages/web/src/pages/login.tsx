@@ -2,7 +2,6 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../store'
 import { signInWithEmailAndPassword } from '../store/auth/thunks'
-import { useNavigate } from 'react-router-dom'
 type Inputs = {
   email: string
   password: string
@@ -15,7 +14,6 @@ export default function Login() {
     formState: { errors },
   } = useForm<Inputs>()
   const dispatch = useDispatch<AppDispatch>()
-  const navigate = useNavigate()
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
     await dispatch(signInWithEmailAndPassword(data))
     //socket.connect()
