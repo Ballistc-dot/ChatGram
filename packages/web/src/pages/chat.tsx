@@ -1,5 +1,4 @@
 import { SendIcon } from '../components/SendIcon'
-import socket from '../services/socket'
 import { RootState } from '../store'
 import { List, Smiley } from '@phosphor-icons/react'
 import { useEffect, useRef, useState } from 'react'
@@ -8,6 +7,8 @@ import { useSelector } from 'react-redux'
 import { Search } from '../components/Search'
 import { api } from '../services/axios'
 import { SearchedContacts } from '../components/SearchedContacts'
+import { useNavigate } from 'react-router-dom'
+import socket from '../services/socket'
 type Test = {
   message: string
 }
@@ -50,21 +51,28 @@ export default function Chat() {
   const [chatMessages, setChatMessages] = useState<IMessage[]>([])
   const [chats, setChats] = useState<Chat[]>([])
   const [searchedContacts, setSearchedContacts] = useState<Contact[]>([])
+  const token = useSelector((state: RootState) => state.auth.token)
+  const navigate = useNavigate()
+
+  if (!socket) {
+    console.log(socket)
+    useEffect(() => {
+      navigate(0)
+    }, [])
+    return <h1>loading</h1>
+  }
 
   useEffect(() => {
-    async function connectSocket() {
-      await socket.connect()
-    }
-    connectSocket()
+    socket.connect()
   }, [])
-  socket.on('message', (content: ISocketMessageResponse) => {
+
+  socket?.on('message', (content: ISocketMessageResponse) => {
     if (activeChat.id !== content.user.id) {
       const newChat = chats.filter((chat) => {
         if (chat.user.id !== content.user.id) {
           return chat
         }
       })
-
       newChat.push({
         lastMessage: content.message,
         user: content.user,
@@ -183,13 +191,13 @@ export default function Chat() {
                   if (msg.isMe) {
                     return (
                       <div key={Math.random()} className='bg-lightGreen max-w-[50%] ml-auto rounded-md px-2 py-1 flex'>
-                        <span className='flex w-[100%] break-all	'>{msg.message}</span>
+                        <span className='flex w-[100%] break-all'>{msg.message}</span>
                       </div>
                     )
                   } else {
                     return (
                       <div key={Math.random()} className='bg-white max-w-[50%] mr-auto rounded-md px-2 py-1 flex'>
-                        <span>{msg.message}</span>
+                        <span className='flex w-[100%] break-all'>{msg.message}</span>
                       </div>
                     )
                   }

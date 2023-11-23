@@ -6,7 +6,7 @@ import { createBrowserRouter, RouterProvider, redirect } from 'react-router-dom'
 import Chat from './pages/chat.tsx'
 import Login from './pages/login.tsx'
 import { store } from './store'
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: '/',
     element: <Chat />,
@@ -31,6 +31,7 @@ const router = createBrowserRouter([
   },
 ])
 
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider store={store}>

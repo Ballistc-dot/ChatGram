@@ -26,6 +26,7 @@ export class CreateUserService {
     const { id } = await this.usersRepository.save(user)
 
     const access_token = await this.jwtProvider.sign(id)
+
     return { access_token }
   }
 }

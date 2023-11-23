@@ -17,8 +17,9 @@ export default function Login() {
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
   const onSubmit: SubmitHandler<Inputs> = async (data: Inputs) => {
-    dispatch(signInWithEmailAndPassword(data))
-    navigate('/')
+    await dispatch(signInWithEmailAndPassword(data))
+    //socket.connect()
+    //navigate('/')
   }
 
   return (

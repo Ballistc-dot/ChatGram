@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { ISignInWithEmailAndPasswordPayload } from './interfaces/ISignInPayload'
 import { api } from '../../services/axios'
+import { router } from '../../main'
 
 export const signInWithEmailAndPassword = createAsyncThunk(
   'auth/signInWithEmailAndPassword',
@@ -14,6 +15,7 @@ export const signInWithEmailAndPassword = createAsyncThunk(
 
       api.defaults.headers.common['Authorization'] = `Bearer ${access_token}`
 
+      router.navigate('/')
       return {
         access_token,
       }

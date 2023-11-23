@@ -12,9 +12,11 @@ export class UserRepository implements IUserRepository {
     })) as User | undefined
   }
   async save(user: ICreateUserDto): Promise<User> {
-    return await prisma.user.create({
-      data: user,
-    })
+    return (await prisma.user
+      .create({
+        data: user,
+      })
+      .catch((err) => console.log(err))) as User
   }
   async findManyByUsername(username: string): Promise<User[] | undefined> {
     const user = await prisma.user.findMany({
@@ -32,10 +34,14 @@ export class UserRepository implements IUserRepository {
     return response
   }
   async findById(id: string): Promise<User | undefined> {
-    return (await prisma.user.findUnique({
-      where: {
-        id,
-      },
-    })) as User | undefined
+    try {
+      return (await prisma.user.findUnique({
+        where: {
+          id,
+        },
+      })) as User | undefined
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
