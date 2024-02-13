@@ -53,8 +53,9 @@ export default function Chat() {
   const [searchedContacts, setSearchedContacts] = useState<Contact[]>([])
 
   const navigate = useNavigate()
+  console.log(socket)
 
-  if (!socket) {
+  if (Object.keys(socket).length === 0) {
     console.log(socket)
     useEffect(() => {
       navigate(0)
