@@ -3,8 +3,8 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_USER: 'library'
-      POSTGRES_PASSWORD: 'library'
+      POSTGRES_USER: 'webchat'
+      POSTGRES_PASSWORD: 'webchat'
     ports:
       - '5432:5432'
   redis:
