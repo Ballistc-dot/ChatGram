@@ -10,6 +10,7 @@ import { Server, Socket } from 'socket.io'
 import { delRedis, setRedis } from '../lib/redis'
 import cors from 'cors'
 import { SendMessageController } from '../infra/ws/send-message-controller'
+
 const app = express()
 
 app.use(express.json())

@@ -17,8 +17,6 @@ export class SendMessageController {
 
     const user = await sendMessageService.execute(userPayload.sub as string)
 
-    console.log(content)
-
     io.to(socketId).emit('message', { message: content.message, user })
   }
 }
