@@ -8,7 +8,7 @@ let socket: Socket = {} as Socket
 if (persist) {
   token = JSON.parse(persist?.auth)?.token
   if (token) {
-    socket = io('http://localhost:3001', {
+    socket = io(import.meta.env.BASE_URL, {
       query: { token },
       autoConnect: false,
     })
